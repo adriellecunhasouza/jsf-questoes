@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Login</title> 
+</h:head>
+<h:body>
+	<h:form>
+	<p:panel style=" width: 33%; margin: auto; margin-top:10%;">
+	<f:facet name="header" style="width:100%;">Login</f:facet>
+	    <h:panelGrid columns="2" cellpadding="3" style="width:100%; margin-top:15px;">		    
+			<h:outputText value="Nome: "/>
+			<p:inputText id="nome" style="width:97%;" maxlength="15" required="true" value="#{livroBean.nome}" />
+			<h:outputText value="Senha: " />
+			<p:password id="senha" style="width:97%;" maxlength="10" required="true" value="#{livroBean.senha}" feedback="true" />
+		</h:panelGrid>
+		<p:commandButton value="Entrar" action="#{livroBean.login}" ajax="false" style="margin-top:8px;"/>
+		</p:panel>
+		<p:messages autoUpdate="true" style=" width: 33.8%; margin: auto;" />
+	</h:form>
+</h:body>
+</html>
+
+
+
+

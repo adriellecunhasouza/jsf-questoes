@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Cadastro de Usuario</title>
+</h:head>
+<h:body>
+<h:form id="formulario" style="margin: auto; margin-top: 5px; width:60%;">
+		<p:panel header="Cadastro de Aluno" style="margin: auto; margin-top:15px;">
+			<p:panelGrid columns="2">
+				<h:outputText for="nome" value="Nome:" />
+				<p:inputText id="nome" label="Nome" value="#{usuarioBean.usuario.nome}"
+					size="50" maxlength="50" required="true" />
+				<h:outputText for="usuario" value="Usuario:" />
+				<p:inputText id="usuario" label="Usuario" value="#{usuarioBean.usuario.usuario}"
+					size="50" maxlength="50" required="true" />
+				<h:outputText for="senha" value="Senha:" />
+				<p:password id="senha" label="Senha" value="#{usuarioBean.usuario.senha}"
+					size="15" maxlength="8" required="true" />
+			</p:panelGrid>
+			<p:commandButton id="cadastrar" value="cadastrar" update="listUsuarios, formulario"
+				action="#{usuarioBean.adicionarUsuario}" style="margin-top: 10px; margin-right: 5px;"/>			
+				<p:commandButton value="Limpar" ajax="true" immediate="true" type="reset" />
+		</p:panel>
+<p:messages id="msg" showDetail="true" autoUpdate="true" />
+	</h:form>
+	<p:dataTable id="listUsuarios" value="#{usuarioBean.listUsuarios}"
+		var="u" style="width:60%;text-align: center; margin: auto; margin-top: 4%;">
+      <f:facet name="header">Usuários Cadastrados</f:facet>
+		<p:column headerText="Nome do Usuário">
+			<h:outputText value="#{u.nome}" />
+		</p:column>
+		<p:column headerText="Usuario">
+			<h:outputText value="#{u.usuario}" />
+		</p:column>
+	</p:dataTable>
+</h:body>
+</html>
+
+
+
+

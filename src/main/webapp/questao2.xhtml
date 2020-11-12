@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="content">
+		<h:panelGrid>
+			<h:form id="listLivros">
+				<p:panel style="width:38.5%; margin: auto; margin-top:30px;">
+					<f:facet name="header">Cadastro de Livros</f:facet>
+					<h:panelGrid columns="2"
+						style="width:100%; margin: auto; padding-right:0;">
+						<h:outputText id="tituloLabel" value="Titulo:*" />
+						<p:inputText id="titulo" required="true" style="width:80%;"
+							label="titulo" value="#{livroBean.livro.titulo}" />
+
+						<h:outputText value="ISBN:" />
+						<p:inputText id="isbn" required="true" style="width:80%;"
+							label="isbn" value="#{livroBean.livro.isbn}" />
+
+						<h:outputText value="Preço:" />
+						<p:inputNumber id="preco" style="width:80%;" label="preco"
+							value="#{livroBean.livro.preco}" symbol="R$" symbolPosition="p"
+							decimalSeparator="," thousandSeparator=".">
+						</p:inputNumber>
+						<h:outputText value="Data de Lançamento:" />
+						<p:calendar id="dataLancamento" required="true"
+							value="#{livroBean.livro.dataLancamento}" pattern="dd/MM/yyyy"
+							style="width:100%; margin: 0;">
+						</p:calendar>
+					</h:panelGrid>
+					<p:commandButton id="cadastrar" value="Cadastrar"
+						actionListener="#{livroBean.adicionarLivro}"
+						update="listLivros, list"
+						style="margin-top: 10px; margin-right: 5px;" />
+					<p:commandButton value="Limpar" immediate="true" type="reset" />
+				</p:panel>
+				<p:messages id="msg" showDetail="true" autoUpdate="true"
+					style="width:39%; margin: auto;" />
+			</h:form>
+			<h:form id="list">
+				<p:dataTable id="listLivro" editable="true"
+					value="#{livroBean.listLivros}" var="l" paginator="true" rows="5"
+					lazy="true"
+					style="width:80%; margin: auto; margin-top: 25px; text-align: center;margin-bottom: 20%;">
+					<f:facet name="header">Livros Cadastrados</f:facet>
+
+					<p:ajax event="rowEditInit" listener="#{l.onRowEdit}"
+						immediate="true" />
+					<p:ajax event="rowEditCancel" listener="#{l.onRowCancel}" />
+					<p:column headerText="Titulo">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.titulo}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="modelInput" value="#{l.titulo}"
+									style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="ISBN">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.isbn}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{l.isbn}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Preço">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.preco}">
+									<f:convertNumber type="currency" pattern="R$ #,##0.00"
+										currencySymbol="R$ " locale="pt_BR" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{l.preco}" style="width:100%" symbol="R$"
+									symbolPosition="s" decimalSeparator="," thousandSeparator="." />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Data">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{l.dataLancamento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar id="dataLancamento" required="true"
+									value="#{l.dataLancamento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="Excluir">
+						<p:commandButton id="excluir" value="Remover"
+							actionListener="#{livroBean.remover(l)}"
+							update="list, listLivros" ajax="true" />
+					</p:column>
+					<p:column headerText="Editar">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</h:panelGrid>
+	</ui:define>
+</ui:composition>
+</html>
